@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Medical History</title>
+    <style>
+        /* Reset for margin and padding */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body styling */
+        body {
+            background-color: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container for the patient info and records */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #3498db;
+            font-size: 26px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .patient-info {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .patient-info p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Medical record list */
+        ul {
+            list-style: none;
+        }
+
+        li {
+            background-color: #f9fafb;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #e1e4e8;
+            transition: box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Formatting for each record entry */
+        .record-entry {
+            margin-bottom: 10px;
+        }
+
+        .record-entry strong {
+            color: #333;
+            display: inline-block;
+            width: 140px;
+        }
+
+        /* No records message styling */
+        .no-records {
+            color: #888;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            background-color: #f1f3f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Medical History for {{ patient.patient_name }}</h2>
+        <div class="patient-info">
+            <p><strong>Patient ID:</strong> {{ patient.id }}</p>
+        </div>
+
+        <ul>
+            {% for record in records %}
+                <li>
+                    <div class="record-entry">
+                        <strong>Date:</strong> {{ record.date }}
+                    </div>
+                    <div class="record-entry">
+                        <strong>Diagnosis:</strong> {{ record.diagnosis }}
+                    </div>
+                    <div class="record-entry">
+                        <strong>Medications:</strong> {{ record.medications }}
+                    </div>
+                    <div class="record-entry">
+                        <strong>Allergies:</strong> {{ record.allergies }}
+                    </div>
+                    <div class="record-entry">
+                        <strong>Treatment History:</strong> {{ record.treatment_history }}
+                    </div>
+                </li>
+            {% empty %}
+                <div class="no-records">
+                    <p>No medical records found for this patient.</p>
+                </div>
+            {% endfor %}
+        </ul>
+        <center> <a href="{% url 'doctor_dashboard'  %}" class="btn btn-succes">Go to Dashboard</a></center>
+    </div>
+</body>
+</html>

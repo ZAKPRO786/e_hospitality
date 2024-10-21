@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .registration-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="password"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: border-color 0.3s ease;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        input[type="password"]:focus,
+        textarea:focus {
+            border-color: #5cb85c;
+            outline: none;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        .message-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 15px;
+            color: #d9534f;
+        }
+
+        .message-list li {
+            padding: 10px;
+            border: 1px solid #d9534f;
+            background-color: #f9d6d5;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer a {
+            color: #5cb85c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #4cae4c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="registration-container">
+        <h1>Patient Registration</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.patient_id.label }}
+                {{ form.patient_id }}
+                {% if form.patient_id.errors %}
+                    <div class="message-list">
+                        <li>{{ form.patient_id.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.patient_name.label }}
+                {{ form.patient_name }}
+                {% if form.patient_name.errors %}
+                    <div class="message-list">
+                        <li>{{ form.patient_name.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.age.label }}
+                {{ form.age }}
+                {% if form.age.errors %}
+                    <div class="message-list">
+                        <li>{{ form.age.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.gender.label }}
+                {{ form.gender }}
+                {% if form.gender.errors %}
+                    <div class="message-list">
+                        <li>{{ form.gender.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.height.label }}
+                {{ form.height }}
+                {% if form.height.errors %}
+                    <div class="message-list">
+                        <li>{{ form.height.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.weight.label }}
+                {{ form.weight }}
+                {% if form.weight.errors %}
+                    <div class="message-list">
+                        <li>{{ form.weight.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.address.label }}
+                {{ form.address }}
+                {% if form.address.errors %}
+                    <div class="message-list">
+                        <li>{{ form.address.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.phone_number.label }}
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                    <div class="message-list">
+                        <li>{{ form.phone_number.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="message-list">
+                        <li>{{ form.email.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="message-list">
+                        <li>{{ form.password.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.password_confirmation.label }}
+                {{ form.password_confirmation }}
+                {% if form.password_confirmation.errors %}
+                    <div class="message-list">
+                        <li>{{ form.password_confirmation.errors|first }}</li>
+                    </div>
+                {% endif %}
+            </div>
+            <button type="submit">Register</button>
+        </form>
+        {% if messages %}
+            <ul class="message-list">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="footer">
+            <p>Already have an account? <a href="{% url 'login_patient' %}">Log in here</a></p>
+            <center><a href="{% url 'index' %}">Home</a></center>
+        </div>
+    </div><script>
+    // Automatically hide messages after 5 seconds
+    setTimeout(function() {
+        var messages = document.querySelectorAll('.alert-message');
+        messages.forEach(function(msg) {
+            msg.style.display = 'none';
+        });
+    }, 5000); // 5000 milliseconds = 5 seconds
+</script>
+
+</body>
+
+</html>

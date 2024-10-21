@@ -1,0 +1,65 @@
+{% extends 'admins/base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <h2>Admin Dashboard</h2>
+
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Doctors</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ doctor_count }}</h5>
+                    <a href="{% url 'doctor_list' %}" class="btn btn-light">View Doctors</a>
+                    <a href="{% url 'doctor_create' %}" class="btn btn-light">Add Doctor</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Total Patients</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ patient_count }}</h5>
+                    <a href="{% url 'patient_list' %}" class="btn btn-light">View Patients</a>
+                    <a href="{% url 'patient_create' %}" class="btn btn-light">Add Patient</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Total Appointments</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ appointment_count }}</h5>
+                    <a href="{% url 'appointment_list' %}" class="btn btn-light">View Appointments</a>
+                    <a href="{% url 'appointment_create' %}" class="btn btn-light">Add Appointment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Recent Appointments</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Doctor</th>
+                <th>Patient</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in recent_appointments %}
+            <tr>
+                <td>{{ appointment.doctor }}</td>
+                <td>{{ appointment.patient }}</td>
+                <td>{{ appointment.date }}</td>
+                <td>{{ appointment.time }}</td>
+                <td>
+                    <a href="{% url 'appointment_delete' appointment.pk %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

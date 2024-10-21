@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Appointment Schedule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/@fullcalendar/core@5.10.1/main.min.css' rel='stylesheet' />
+    <link href='https://unpkg.com/@fullcalendar/daygrid@5.10.1/main.min.css' rel='stylesheet' />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .schedule-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            margin-top: 10px;
+        }
+
+        form input, form select {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* FullCalendar styles */
+        #calendar {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="schedule-container">
+        <h1>Your Appointment Schedule</h1>
+
+        <!-- Filter Form -->
+        <form method="GET" action="{% url 'doctor_schedule' %}">
+            <label for="date">Filter by Date:</label>
+            <input type="date" name="date" value="{{ filter_date }}">
+
+            <label for="status">Filter by Status:</label>
+            <select name="status">
+                <option value="">All</option>
+                <option value="Scheduled" {% if filter_status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+                <option value="Accepted" {% if filter_status == 'Accepted' %}selected{% endif %}>Accepted</option>
+                <option value="Completed" {% if filter_status == 'Completed' %}selected{% endif %}>Completed</option>
+                <option value="Cancelled" {% if filter_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+            </select>
+
+            <label for="patient">Filter by Patient:</label>
+            <input type="text" name="patient" value="{{ filter_patient }}">
+
+            <button type="submit">Filter</button>
+        </form>
+
+        <!-- Appointments Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.patient.user.username }}</td>
+                    <td>{{ appointment.date }}</td>
+                    <td>{{ appointment.time }}</td>
+                    <td>{{ appointment.reason }}</td>
+                    <td>{{ appointment.status }}</td>
+                    <td>
+                        <a href="{% url 'edit_appointment' appointment.id %}">Edit</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">No appointments scheduled.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- FullCalendar -->
+        <div id='calendar'></div>
+
+        <div class="footer">
+            <p>&copy; {{ current_year }} Your Clinic Name. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- FullCalendar Scripts -->
+    <script src='https://unpkg.com/@fullcalendar/core@5.10.1/main.min.js'></script>
+    <script src='https://unpkg.com/@fullcalendar/daygrid@5.10.1/main.min.js'></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: ['dayGrid'],
+                events: [
+                    {% for appointment in appointments %}
+                    {
+                        title: '{{ appointment.patient.user.username }} - {{ appointment.reason }}',
+                        start: '{{ appointment.date }}T{{ appointment.time }}',
+                        allDay: true,
+                    },
+                    {% endfor %}
+                ]
+            });
+            calendar.render();
+        });
+    </script>
+</body>
+
+</html>

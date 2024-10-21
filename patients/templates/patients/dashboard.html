@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f8;
+        }
+
+        .sidebar {
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            padding-top: 20px;
+            transition: width 0.3s;
+        }
+
+        .sidebar h2 {
+            color: #5cb85c;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #5cb85c;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            color: #5cb85c;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .table th {
+            background-color: #5cb85c;
+            color: white;
+        }
+
+        /* Customizing the modal */
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
+
+        /* Footer styling */
+        .footer a {
+            color: #5cb85c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Patient Dashboard</h2>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'logout_patient' %}">Logout</a>
+
+
+    </div>
+
+    <div class="main-content">
+        <div class="dashboard-container">
+            <h1>Welcome, {{ patient.patient_name }}!</h1>
+
+            <h2>Your Appointments</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Doctor</th>
+                        <th>Reason</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td>{{ appointment.date }}</td>
+                        <td>{{ appointment.time }}</td>
+                        <td>{{ appointment.doctor.user.username }}</td>
+                        <td>{{ appointment.reason }}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{% url 'reschedule_appointment' appointment.id %}" class="btn btn-primary btn-sm">Update</a>
+                                <a href="#" class="btn btn-danger btn-sm" onclick="openModal('{{ appointment.id }}'); return false;">Cancel</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No appointments found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Your Medical Records</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Diagnosis</th>
+                        <th>Medications</th>
+                        <th>Allergies</th>
+                        <th>Treatment History</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in medical_records %}
+                    <tr>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.diagnosis }}</td>
+                        <td>{{ record.medications }}</td>
+                        <td>{{ record.allergies }}</td>
+                        <td>{{ record.treatment_history }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No medical records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Your Billing Records</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Bill Amount</th>
+                        <th>Payment Status</th>
+                        <th>Payment Date</th>
+                        <th>Pay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bill in bills %}
+                    <tr>
+                        <td>{{ bill.bill_amount }}</td>
+                        <td>{{ bill.payment_status }}</td>
+                        <td>{{ bill.payment_date|default:"Not Paid" }}</td>
+                        <td>
+                            <a href="{% url 'pay_bill' bill.id %}" class="btn btn-success btn-sm">Pay Bill</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No billing records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h2>Your Prescriptions</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Medication</th>
+                        <th>Dosage</th>
+                        <th>Instructions</th>
+                        <th>Duration (Days)</th>
+                        <th>Refills</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prescription in prescriptions %}
+                    <tr>
+                        <td>{{ prescription.medication }}</td>
+                        <td>{{ prescription.dosage }}</td>
+                        <td>{{ prescription.instructions }}</td>
+                        <td>{{ prescription.duration }}</td>
+                        <td>{{ prescription.refills }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No prescriptions found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="footer">
+                <p><a href="{% url 'book_appointment' %}" class="btn btn-success btn-sm">Book a New Appointment</a></p>
+                <p><a href="{% url 'billing_payments' %}"class="btn btn-danger btn-sm">View Billing Details</a></p>
+                <p><a href="{% url 'health_resources' %}"class="btn btn-primary btn-sm">Access Health Resources</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Confirmation -->
+    <div id="myModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cancel Appointment</h5>
+                    <button type="button" class="close" onclick="closeModal();" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to cancel this appointment?</p>
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" action="{% url 'cancel_appointment' %}" id="cancelForm">
+                        {% csrf_token %}
+                        <input type="hidden" name="appointment_id" id="appointment_id">
+                        <button type="submit" class="btn btn-danger">Yes, Cancel</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal();">No, Go Back</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function openModal(appointmentId) {
+            document.getElementById("appointment_id").value = appointmentId;
+            $('#myModal').modal('show');
+        }
+
+        function closeModal() {
+            $('#myModal').modal('hide');
+        }
+
+        $(window).on('click', function (event) {
+            if (event.target == document.getElementById("myModal")) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

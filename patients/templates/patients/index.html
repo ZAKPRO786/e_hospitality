@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-HOSPITAL</title>
+    <meta name="description" content="E-Hospital: Your trusted partner for health.">
+    <meta name="keywords" content="hospital, healthcare, doctor, appointment, e-hospital">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header sticky-top">
+        <div class="topbar d-flex align-items-center">
+            <div class="container d-flex justify-content-between">
+                <div class="contact-info d-flex align-items-center">
+                    <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:ehospital@gmail.com">ehospital@gmail.com</a></i>
+                    <i class="bi bi-phone d-flex align-items-center ms-4"><span>+91 9846563308</span></i>
+                </div>
+                <div class="social-links d-none d-md-flex align-items-center">
+                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="branding d-flex align-items-center">
+            <div class="container d-flex align-items-center justify-content-between">
+                <a href="index.html" class="logo d-flex align-items-center me-auto">
+                    <h1 class="sitename">E-HOSPITAL</h1>
+                </a>
+
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                        <li><a href="{% url 'index' %}" class="active">HOME</a></li>
+                        <li><a href="{% url 'admin_login' %}">ADMIN</a></li>
+                        <li><a href="{% url 'register_doctor' %}">DOCTOR SIGNUP</a></li>
+                        <li><a href="{% url 'login_doctor' %}">DOCTOR LOGIN</a></li>
+                        <li><a href="{% url 'register_patient' %}">PATIENT REGISTRATION</a></li>
+                    </ul>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+
+                <a class="cta-btn d-none d-sm-block" href="{% url 'login_patient' %}">Make an Appointment</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section id="hero" class="hero section light-background">
+            <img src="{% static 'assets/img/hero-bg.jpg' %}" alt="Hero Image" data-aos="fade-in">
+            <div class="container position-relative">
+                <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
+                    <h2>WELCOME TO E-HOSPITAL</h2>
+                    <p>Your trusted partner for health.</p>
+                </div>
+
+                <div class="content row gy-4">
+                    <div class="col-lg-4 d-flex align-items-stretch">
+                        <div class="why-box" data-aos="zoom-out" data-aos-delay="200">
+                            <h3>Why Choose E-Hospital?</h3>
+                            <p>
+                                E-Hospital combines the best healthcare practices with modern technology. Our team is dedicated to providing high-quality medical care tailored to your needs.
+                            </p>
+                            <div class="text-center">
+                                <a href="#about" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 d-flex align-items-stretch">
+                        <div class="d-flex flex-column justify-content-center">
+                            <div class="row gy-4">
+                                <div class="col-xl-4 d-flex align-items-stretch">
+                                    <div class="icon-box" data-aos="zoom-out" data-aos-delay="300">
+                                        <i class="bi bi-clipboard-data"></i>
+                                        <h4>Quality Care</h4>
+                                        <p>Providing high-quality healthcare with compassion and care.</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 d-flex align-items-stretch">
+                                    <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
+                                        <i class="bi bi-gem"></i>
+                                        <h4>Experienced Doctors</h4>
+                                        <p>Our team consists of experienced professionals dedicated to your health.</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 d-flex align-items-stretch">
+                                    <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
+                                        <i class="bi bi-inboxes"></i>
+                                        <h4>Comprehensive Services</h4>
+                                        <p>From consultations to advanced treatments, we offer comprehensive medical services.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Sections can be added here -->
+
+    </main>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+{% extends "admins/base.html" %}
+{% block content %}
+<h1>Patient List</h1>
+<a href="{% url 'patient_create' %}" class="btn btn-primary">Add New Patient</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Patient ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for patient in patients %}
+        <tr>
+            <td>{{ patient.user.username }}</td>
+            <td>{{ patient.patient_id }}</td>
+            <td>{{ patient.patient_name }}</td>
+            <td>
+                <a href="{% url 'patient_update' patient.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'patient_delete' patient.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

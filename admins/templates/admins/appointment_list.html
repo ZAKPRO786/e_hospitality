@@ -1,0 +1,30 @@
+{% extends "admins/base.html" %}
+{% block content %}
+<h1>Appointment List</h1>
+<a href="{% url 'appointment_create' %}" class="btn btn-primary">Add New Appointment</a>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.patient.patient_name }}</td>
+            <td>{{ appointment.doctor.user.username }}</td>
+            <td>{{ appointment.date }}</td>
+            <td>{{ appointment.time }}</td>
+            <td>
+                <a href="{% url 'appointment_update' appointment.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'appointment_delete' appointment.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

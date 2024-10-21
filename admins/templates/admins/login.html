@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #e9ecef; /* Slightly darker background for contrast */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px; /* Increased max width for a better layout */
+            transition: transform 0.2s; /* Add a smooth transition effect */
+        }
+
+        .login-container:hover {
+            transform: scale(1.02); /* Slightly enlarge on hover */
+        }
+
+        h2 {
+            text-align: center;
+            color: #343a40; /* Darker title color for better contrast */
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            width: 100%; /* Full width for the login button */
+            background-color: #007bff; /* Custom blue color */
+            border: none; /* Remove border */
+            transition: background-color 0.3s ease; /* Smooth background color change */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6c757d; /* Light grey for footer text */
+        }
+
+        .home-button {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        a {
+            color: #007bff; /* Custom link color */
+            text-decoration: none; /* Remove underline */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="login-container">
+            <div class="home-button">
+                <a href="{% url 'index' %}" class="btn btn-outline-secondary">Home</a>
+            </div>
+            <h2>Admin Login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <p class="footer">New to the admin panel? <a href="{% url 'admin_register' %}">Register here</a></p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Appointment</title>
+</head>
+
+<body>
+    <div>
+        <h1>Edit Appointment</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="reason">Reason:</label>
+            <input type="text" name="reason" value="{{ appointment.reason }}">
+
+            <label for="status">Status:</label>
+            <select name="status">
+                <option value="Scheduled" {% if appointment.status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+                <option value="Accepted" {% if appointment.status == 'Accepted' %}selected{% endif %}>Accepted</option>
+                <option value="Completed" {% if appointment.status == 'Completed' %}selected{% endif %}>Completed</option>
+                <option value="Cancelled" {% if appointment.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+            </select>
+
+            <button type="submit">Update Appointment</button>
+        </form>
+    </div>
+</body>
+
+</html>

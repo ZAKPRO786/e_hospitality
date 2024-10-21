@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Canceled</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            color: #dc3545; /* Bootstrap danger color */
+        }
+        p {
+            color: #333;
+        }
+        a {
+            color: #007bff; /* Bootstrap primary color */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Canceled</h1>
+        <p>Your payment has been canceled. If this was a mistake, you can return to the billing page to try again.</p>
+        <p><a href="{% url 'billing_payments' %}">Return to Billing</a></p>
+        <p><a href="{% url 'patient_dashboard' %}">Return to Dashboard</a></p>
+    </div>
+</body>
+</html>
